@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -75,6 +76,36 @@ public class AddClient {
     }
 
 
+    @FindBy (xpath = "//span[@id='select2-client_country-container']")
+    WebElement countryContainer;
+
+    public void setCountry(String country)
+    {
+        countryContainer.click();
+        searchBox.sendKeys(country);
+        driver.findElement(By.xpath("//li[normalize-space()='"+country+"']")).click();
+    }
+
+    @FindBy (xpath = "//span[@id='select2-client_gender-container']")
+    WebElement genderContainer;
+
+
+    public void setGender(String gender)
+    {
+        genderContainer.click();
+        driver.findElement(By.xpath("//li[normalize-space()='"+gender+"']")).click();
+    }
+
+    @FindBy (xpath = "//input[@id='client_birthdate']")
+    WebElement birthDate;
+
+    public void setBirthDate(String dateStr)
+    {
+        //birthDate.sendKeys(dateStr);
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].setAttribute('value','"+dateStr+"')",birthDate);
+    }
 
     public void clickBtnSave()
     {
