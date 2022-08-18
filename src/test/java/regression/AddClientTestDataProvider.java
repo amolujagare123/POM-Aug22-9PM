@@ -1,8 +1,11 @@
 package regression;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -37,7 +40,7 @@ public class AddClientTestDataProvider {
                               String state,String zip,String country,
                               String gender,String birthdate,String phone,
                               String fax,String mobile,String email,
-                              String web,String tax,String vat)
+                              String web,String tax,String vat,String expected,String xpathActual)
     {
         Menu menu  = new Menu(driver);
         menu.clickAddClient();
@@ -63,6 +66,23 @@ public class AddClientTestDataProvider {
         addClient.setClientVat(vat);
         addClient.setClientTax(tax);
         addClient.clickBtnSave();
+
+       // String expected = "Client already exists!";
+
+        String actual = "";
+
+        try {
+            actual = driver.findElement(By.xpath(xpathActual)).getText();
+        }
+        catch (Exception e)
+        {
+
+        }
+
+        System.out.println("expected="+expected);
+        System.out.println("actual="+actual);
+
+        Assert.assertEquals(actual,expected,"wrong message");
 
     }
 

@@ -9,6 +9,10 @@ import org.openqa.selenium.support.PageFactory;
 
 public class AddClient {
 
+
+    @FindBy(xpath = "//div[contains(@class,'alert')]")
+    public WebElement anyMsg;
+
     @FindBy(xpath = "//input[@id='client_name']")
     WebElement clientName;
 
