@@ -18,10 +18,16 @@ public class Login {
     public WebElement txtUsername;
 
     @FindBy(xpath = "//input[@id='password']")
-    WebElement txtPassword;
+    public  WebElement txtPassword;
 
     @FindBy (xpath = "//button[@type='submit']")
-    WebElement btnLogin;
+    public WebElement btnLogin;
+
+    @FindBy (xpath = "//label[@for='email']")
+    public WebElement lblEmail;
+
+    @FindBy (xpath = "//label[@for='password']")
+    public WebElement lblPassword;
 
     @FindBy (xpath = "//a[normalize-space()='I forgot my password']")
     WebElement btnForgotPass;

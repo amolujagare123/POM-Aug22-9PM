@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import pages.AddClient;
 import pages.Login;
 import pages.Menu;
+import testutil.DoLogin;
 
 import java.io.IOException;
 import java.sql.*;
@@ -20,22 +21,8 @@ import java.util.ArrayList;
 import static testutil.Conversion.*;
 import static utility.MyData.getMyData;
 
-public class AddClientTestDBTestingDataProvider {
-    WebDriver driver;
-    @BeforeClass
-    public void doLogin()
-    {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("http://localhost/ip");
+public class AddClientTestDBTestingDataProvider extends DoLogin  {
 
-        Login login = new Login(driver);
-
-        login.setTxtUsername("amolujagare@gmail.com");
-        login.setTxtPassword("admin123");
-        login.clickBtnLogin();
-    }
 
     @Test (dataProvider = "getData")
     public void addClientTest(String name,String surname,String language,

@@ -1,21 +1,18 @@
-package regression;
+package testutil;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.Login;
-import testutil.OpenUrl;
 
 import java.io.IOException;
 
 import static utility.ConfigReader.getPassword;
 import static utility.ConfigReader.getUsername;
 
-public class LoginTest extends OpenUrl {
+public class DoLogin extends OpenUrl{
 
-    @Test
-    public void myTest() throws IOException {
+    @BeforeClass
+    public void doLogin() throws IOException {
 
         Login login = new Login(driver);
 
@@ -24,5 +21,4 @@ public class LoginTest extends OpenUrl {
         login.clickBtnLogin();
 
     }
-
 }

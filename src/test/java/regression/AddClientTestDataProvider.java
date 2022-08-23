@@ -12,27 +12,13 @@ import org.testng.annotations.Test;
 import pages.AddClient;
 import pages.Login;
 import pages.Menu;
+import testutil.DoLogin;
 
 import java.io.IOException;
 
 import static utility.MyData.getMyData;
 
-public class AddClientTestDataProvider {
-    WebDriver driver;
-    @BeforeClass
-    public void doLogin()
-    {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("http://localhost/ip");
-
-        Login login = new Login(driver);
-
-        login.setTxtUsername("amolujagare@gmail.com");
-        login.setTxtPassword("admin123");
-        login.clickBtnLogin();
-    }
+public class AddClientTestDataProvider extends DoLogin {
 
     @Test (dataProvider = "getData")
     public void addClientTest(String name,String surname,String language,
