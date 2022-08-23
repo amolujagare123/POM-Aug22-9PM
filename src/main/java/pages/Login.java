@@ -15,7 +15,7 @@ public class Login {
     WebElement element = driver.findElement(By.xpath("//input[@id='email']"));
   */
     @FindBy (xpath = "//input[@id='email']")
-    WebElement txtUsername;
+    public WebElement txtUsername;
 
     @FindBy(xpath = "//input[@id='password']")
     WebElement txtPassword;

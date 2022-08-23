@@ -14,8 +14,10 @@ import pages.Menu;
 
 import java.io.IOException;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 
+import static testutil.Conversion.*;
 import static utility.MyData.getMyData;
 
 public class AddClientTestDBTestingDataProvider {
@@ -41,11 +43,11 @@ public class AddClientTestDBTestingDataProvider {
                               String state,String zip,String country,
                               String gender,String birthdate,String phone,
                               String fax,String mobile,String email,
-                              String web,String tax,String vat) throws ClassNotFoundException, SQLException {
+                              String web,String tax,String vat) throws ClassNotFoundException, SQLException, ParseException {
         ArrayList<String> expected = new ArrayList<>();
 
-        String val = "565656.0";
-        String str = ""+(int) Double.parseDouble(val); // 565656
+      /*  String val = "565656.0";
+        String str = ""+(int) Double.parseDouble(val); // 565656*/
 
         expected.add(name);
         expected.add(surname);
@@ -54,17 +56,17 @@ public class AddClientTestDBTestingDataProvider {
         expected.add(address2);
         expected.add(city);
         expected.add(state);
-        expected.add(zip);
+        expected.add(convertToNumberText(zip));
         expected.add(country);
         expected.add(gender);
         expected.add(birthdate);
-        expected.add(phone);
-        expected.add(fax);
-        expected.add(mobile);
+        expected.add(convertToNumberText(phone));
+        expected.add(convertToNumberText(fax));
+        expected.add(convertToNumberText(mobile));
         expected.add(email);
         expected.add(web);
-        expected.add(tax);
-        expected.add(vat);
+        expected.add(convertToNumberText(tax));
+        expected.add(convertToNumberText(vat));
 
         Menu menu  = new Menu(driver);
         menu.clickAddClient();
@@ -78,18 +80,18 @@ public class AddClientTestDBTestingDataProvider {
         addClient.setClientAddress2(address2);
         addClient.setClientCity(city);
         addClient.setClientState(state);
-        addClient.setClientZip(zip);
+        addClient.setClientZip(convertToNumberText(zip));
         addClient.setCountry(country);
         addClient.setGender(gender);
         addClient.setBirthDate(birthdate);
-        addClient.setClientPhone(phone);
-        addClient.setClientFax(fax);
-        addClient.setClientMobile(mobile);
+        addClient.setClientPhone(convertToNumberText(phone));
+        addClient.setClientFax(convertToNumberText(fax));
+        addClient.setClientMobile(convertToNumberText(mobile));
         addClient.setClientEmail(email);
         addClient.setClientWeb(web);
-        addClient.setClientVat(vat);
-        addClient.setClientTax(tax);
-        addClient.clickBtnSave();
+        addClient.setClientVat(convertToNumberText(vat));
+        addClient.setClientTax(convertToNumberText(tax));
+      //  addClient.clickBtnSave();
 
         ArrayList<String> actual = new ArrayList<>();
 
@@ -114,9 +116,17 @@ public class AddClientTestDBTestingDataProvider {
             actual.add(rs.getString("client_city"));
             actual.add(rs.getString("client_state"));
             actual.add(rs.getString("client_zip"));
-            actual.add(rs.getString("client_country"));
-            actual.add(rs.getString("client_gender"));
-            actual.add(rs.getString("client_birthdate"));
+
+            String shortCountry = rs.getString("client_country");
+            String fullFormCountry = convertCountry(shortCountry);
+            actual.add(fullFormCountry);
+
+
+            actual.add(getGender(rs.getString("client_gender")));
+
+            actual.add(convertDate(rs.getString("client_birthdate")));
+
+
             actual.add(rs.getString("client_phone"));
             actual.add(rs.getString("client_fax"));
             actual.add(rs.getString("client_mobile"));
@@ -130,6 +140,7 @@ public class AddClientTestDBTestingDataProvider {
         System.out.println("expected="+expected);
         System.out.println("actual="+actual);
 
+        Assert.assertEquals(actual,expected,"list does not match");
 
     }
 
